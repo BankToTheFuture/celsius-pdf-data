@@ -189,9 +189,25 @@ async function updatePrices() {
     'ZRX',
     'ZUSD',
   ]) {
+    let cmcSymbol = symbol;
+    if (symbol === 'MCDAI') {
+      cmcSymbol = 'DAI';
+    }
+
+    let price = tokenPrices.data?.[cmcSymbol]?.quote?.USD?.price
+    if (symbol === 'THKD') {
+      price = 0.04455600
+    }
+    if (symbol === 'WDGLD') {
+      price = 139.49
+    }
+    if (symbol === 'PAX') {
+      price = 0.9996
+    }
+
     await Token.update(
       {
-        value: tokenPrices.data?.[symbol]?.quote?.USD?.price,
+        value: price,
       },
       { where: { symbol } },
     );
