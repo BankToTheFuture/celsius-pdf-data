@@ -123,7 +123,7 @@ async function insertAllData() {
 /**
  * Updates the database with prices as listed in tokenPrices.ts
  */
-async function updatePrices() {
+export async function updatePrices() {
   for (const symbol of [
     '1INCH',
     'AAVE',
@@ -214,10 +214,12 @@ async function updatePrices() {
   }
 }
 
-(async () => {
-  await insertAllData();
-  // await updatePrices();
-  // const tokens = await Token.findAll();
-  // console.log('TOKENS: ', tokens);
-})();
+if (require.main === module) {
+  (async () => {
+    await insertAllData();
+    // await updatePrices();
+    // const tokens = await Token.findAll();
+    // console.log('TOKENS: ', tokens);
+  })();
+}
 // parse file
