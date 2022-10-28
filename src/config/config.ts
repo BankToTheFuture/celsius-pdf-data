@@ -7,6 +7,8 @@ export default {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
+    charset: 'utf8mb4',
+    collate: 'utf8mb4_general_ci',
     logging: false,
   },
   test: {
@@ -15,6 +17,8 @@ export default {
     database: process.env.DB_NAME_TEST,
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
+    charset: 'utf8mb4',
+    collate: 'utf8mb4_general_ci',
     logging: false,
   },
   production: {
