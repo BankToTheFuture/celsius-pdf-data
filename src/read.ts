@@ -44,6 +44,8 @@ interface User {
   name: string;
   earn: Asset[];
   custody: Asset[];
+  withheld: Asset[];
+  collateral: Asset[];
 }
 
 // const users: User[] = [];
@@ -60,6 +62,8 @@ export function parseFile(file: string) {
   let NAME = 1;
   let EARN = 5;
   let CUSTODY = 6;
+  let WITHHELD = 7;
+  let COLLATERAL = 8;
 
   for (const row of data) {
     const rowArray = row as string[];
@@ -70,6 +74,10 @@ export function parseFile(file: string) {
       ADDRESS = rowArray.findIndex((val) => val == 'ADDRESS');
       EARN = rowArray.findIndex((val) => val == 'EARN ACCOUNT');
       CUSTODY = rowArray.findIndex((val) => val == 'CUSTODY ACCOUNT');
+      WITHHELD = rowArray.findIndex((val) => val == 'WITHHELD ACCOUNT');
+      COLLATERAL = rowArray.findIndex(
+        (val) => val == 'COLLATERAL ON LOAN RECEIVABLE',
+      );
       // skip headings
       console.log('Hone in on headings...');
     } else {
@@ -88,6 +96,8 @@ export function parseFile(file: string) {
 
       const earnTokens = parseCrypto(earn);
       const custodyTokens = parseCrypto(custody);
+      const withheldTokens = parseCrypto(withheld);
+      const collateralTokens = parseCrypto(collateral);
 
       users.push({
         schedule,
@@ -95,6 +105,8 @@ export function parseFile(file: string) {
         address,
         earn: earnTokens,
         custody: custodyTokens,
+        withheld: withheldTokens,
+        collateral: collateralTokens,
       });
     }
   }

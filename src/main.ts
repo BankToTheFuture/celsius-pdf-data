@@ -62,6 +62,8 @@ async function insertAllData() {
   await db.sequelize.sync({ force: true });
   const earn = await categoryFactory('earn');
   const custody = await categoryFactory('custody');
+  const withheld = await categoryFactory('withheld');
+  const collateral = await categoryFactory('collateral');
 
   // loop through files
   for (const file of files) {
@@ -72,6 +74,7 @@ async function insertAllData() {
     for (const user of users) {
       if (user.schedule?.length > 0 && user.name?.length > 0) {
         let totalUSDLoss = 0;
+
         for (const asset of user.earn ?? []) {
           const myAsset = await getAsset(asset, user.schedule, earn.name);
           if (myAsset != null) {
@@ -87,6 +90,30 @@ async function insertAllData() {
 
         for (const asset of user.custody ?? []) {
           const myAsset = await getAsset(asset, user.schedule, custody.name);
+          if (myAsset != null) {
+            assetsArr.push(myAsset);
+            const validPrice =
+              tokenPrices.data?.[myAsset.token]?.quote?.USD?.price;
+            if (isFinite(validPrice)) {
+              totalUSDLoss += myAsset.quantity * validPrice;
+            }
+          }
+        }
+
+        for (const asset of user.withheld ?? []) {
+          const myAsset = await getAsset(asset, user.schedule, withheld.name);
+          if (myAsset != null) {
+            assetsArr.push(myAsset);
+            const validPrice =
+              tokenPrices.data?.[myAsset.token]?.quote?.USD?.price;
+            if (isFinite(validPrice)) {
+              totalUSDLoss += myAsset.quantity * validPrice;
+            }
+          }
+        }
+
+        for (const asset of user.collateral ?? []) {
+          const myAsset = await getAsset(asset, user.schedule, collateral.name);
           if (myAsset != null) {
             assetsArr.push(myAsset);
             const validPrice =
