@@ -28,7 +28,7 @@ export class Asset extends Model {
   @Column
   category: string;
 
-  @Column(DataType.DECIMAL(13, 4))
+  @Column(DataType.DECIMAL(40, 20))
   quantity: number;
 
   @BelongsTo(() => Person)

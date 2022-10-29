@@ -20,7 +20,7 @@ export class Person extends Model {
   @Column
   address: string;
 
-  @Column(DataType.DECIMAL(13, 2))
+  @Column(DataType.DECIMAL(40, 20))
   lossInUSD: number;
 
   @HasMany(() => Asset)
