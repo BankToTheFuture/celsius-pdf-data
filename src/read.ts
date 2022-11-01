@@ -91,8 +91,8 @@ export function parseFile(file: string) {
       const isSubjectToOffset: string = rowArray?.[4];
       const earn: string = rowArray?.[EARN];
       const custody: string = rowArray?.[CUSTODY];
-      const withheld: string = rowArray?.[7];
-      const collateral: string = rowArray?.[8];
+      const withheld: string = rowArray?.[WITHHELD];
+      const collateral: string = rowArray?.[COLLATERAL];
 
       const earnTokens = parseCrypto(earn);
       const custodyTokens = parseCrypto(custody);
