@@ -22,9 +22,9 @@ const totalTokens = {};
  */
 export function categorizeAssets(data: string[]): Asset[] {
   const assets = data.reduce((acc, curr) => {
-    const [token, qtyStr] = curr.split(' ');
+    const [token, qtyStr, qtyStr2] = curr.split(' ');
     totalTokens[token] = 1;
-    const qty = parseFloat(qtyStr);
+    const qty = token == 'USDT' ? parseFloat(qtyStr2) : parseFloat(qtyStr);
     acc.push({ symbol: token, qty });
 
     return acc;
